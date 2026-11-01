@@ -1,0 +1,7 @@
+@tailwind base;@tailwind components;@tailwind utilities;
+html,body,#root{height:100%}
+body{@apply bg-bg text-tx font-sans text-sm}
+:focus-visible{outline:2px solid #536E60;outline-offset:2px}
+.anim-fade{animation:fade .18s ease-out}.anim-pop{animation:pop .2s ease-out}
+@keyframes fade{from{opacity:0}}@keyframes pop{from{opacity:0;scale:.985}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}

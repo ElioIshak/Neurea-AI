@@ -1,15 +1,27 @@
+import os
+
+from dotenv import load_dotenv
 from fastapi import FastAPI
 
-from routes import auth
+from routes import (
+    auth,
+    patient
+)
 
 
 def create_app() -> FastAPI:
+
+    load_dotenv()
+
     app = FastAPI(
         title="Neurea-AI",
         version='1.0'
     )
 
-    app.include_router(prefix='/api', router=auth.router)
+    prefix = os.getenv('API_PREFIX')
+
+    app.include_router(prefix=prefix, router=auth.router)
+    app.include_router(prefix=prefix, router=patient.router)
 
     return app
 
