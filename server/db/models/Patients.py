@@ -4,11 +4,14 @@ from datetime import date, datetime
 from enum import Enum
 from sqlalchemy import ForeignKey, Date, DateTime, Text, func, Enum as sqlenum, Uuid
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+from typing import TYPE_CHECKING
 
 from db.db import Base
-from Users import User
-from Cases import Case
-from Mris import MRI
+
+if TYPE_CHECKING:
+    from db.models.Users import User
+    from db.models.Cases import Case
+    from db.models.Mris import MRI
 
 class Sex(str, Enum):
     MALE = 'male'

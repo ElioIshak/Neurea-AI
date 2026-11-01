@@ -1,16 +1,17 @@
 import uuid
 
 from datetime import datetime
-from typing import Any
-
 from sqlalchemy import BigInteger, DateTime, ForeignKey, String, func
 from sqlalchemy.dialects.postgresql import JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+from typing import Any, TYPE_CHECKING
 
 from db.db import Base
-from Users import User
-from Cases import Case
-from Patients import Patient
+
+if TYPE_CHECKING:
+    from db.models.Users import User
+    from db.models.Cases import Case
+    from db.models.Patients import Patient
 
 
 class MRI(Base):

@@ -4,10 +4,13 @@ from datetime import datetime
 
 from sqlalchemy import DateTime, ForeignKey, Text, func, Uuid
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+from typing import TYPE_CHECKING
 
 from db.db import Base
-from Cases import Case
-from Papers import Paper
+
+if TYPE_CHECKING:
+    from db.models.Cases import Case
+    from db.models.Papers import Paper
 
 class CaseResearchPaper(Base):
     __tablename__ = "case_research_papers"

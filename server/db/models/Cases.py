@@ -4,12 +4,15 @@ from datetime import datetime
 from enum import Enum
 from sqlalchemy import ForeignKey, VARCHAR, Text, Enum as sqlenum, DateTime, func, UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+from typing import TYPE_CHECKING
 
 from db.db import Base
-from Patients import Patient
-from Users import User
-from Mris import MRI
-from CaseResearchPapers import CaseResearchPaper
+
+if TYPE_CHECKING:
+    from db.models.Patients import Patient
+    from db.models.Users import User
+    from db.models.Mris import MRI
+    from db.models.CaseResearchPapers import CaseResearchPaper
 
 
 class Status(str, Enum):

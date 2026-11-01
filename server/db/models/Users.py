@@ -2,10 +2,13 @@ import uuid
 
 from sqlalchemy import UUID
 from sqlalchemy.orm import mapped_column, Mapped, relationship
+from typing import TYPE_CHECKING
 
 from db.db import Base
-from Patients import Patient
-from Cases import Case
+
+if TYPE_CHECKING:
+    from db.models.Cases import Case
+    from db.models.Patients import Patient
 
 class User(Base):
     __tablename__ = 'users'

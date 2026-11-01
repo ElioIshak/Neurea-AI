@@ -3,10 +3,12 @@ import uuid
 from datetime import date, datetime
 from sqlalchemy import Uuid, VARCHAR, Text, ForeignKey, Date, DateTime, func, JSON
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from typing import Any
+from typing import Any, TYPE_CHECKING
 
 from db.db import Base
-from CaseResearchPapers import CaseResearchPaper
+
+if TYPE_CHECKING:
+    from db.models.CaseResearchPapers import CaseResearchPaper
 
 class Paper(Base):
     __tablename__ = "papers"

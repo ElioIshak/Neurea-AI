@@ -1,15 +1,17 @@
 import uuid
 
 from datetime import datetime
-from typing import Literal
+from typing import Literal, TYPE_CHECKING
 
 from sqlalchemy import CheckConstraint, DateTime, ForeignKey, Index, String, Text, func
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from db.db import Base
-from Users import User
-from Chats import Chat
+
+if TYPE_CHECKING:
+    from db.models.Users import User
+    from db.models.Chats import Chat
 
 class Message(Base):
     __tablename__ = "messages"

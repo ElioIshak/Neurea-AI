@@ -1,14 +1,16 @@
 import uuid
 
 from datetime import datetime
-
 from sqlalchemy import DateTime, ForeignKey, func
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+from typing import TYPE_CHECKING
 
 from db.db import Base
-from Cases import Case
-from Messages import Message
+
+if TYPE_CHECKING:
+    from db.models.Cases import Case
+    from db.models.Messages import Message
 
 
 class Chat(Base):
