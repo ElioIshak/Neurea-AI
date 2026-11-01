@@ -1,4 +1,4 @@
-from datetime import datetime, time
+from datetime import datetime, time, timezone
 from pydantic import BaseModel, ConfigDict, EmailStr, Field, model_validator
 
 class loginInput(BaseModel):
@@ -49,7 +49,7 @@ class signupOutput(BaseModel):
     id: str
     name: str
     email: str
-    time: time = Field(default_factory=lambda: datetime.now().time())
+    created_time: time = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 class UserResponse(BaseModel):
     # retreive the response from the attributes of the object received
