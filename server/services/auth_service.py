@@ -27,10 +27,10 @@ async def login(input: loginInput, db: Session) -> loginOutput:
         {
             'sub': user.id,
             'email': user.email,
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(days=15)
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(days=os.getenv('ACCESS_TOKEN_EXPIRE_DAYS'))
         },
-        key=os.getenv('JWT_KEY'),
-        algorithm=os.getenv('JWT_ALGORITHM')
+        key=os.getenv('SECRET_KEY'),
+        algorithm=os.getenv('ALGORITHM')
     )
 
     if token is None:
