@@ -1,0 +1,14 @@
+# API
+fastapi
+uvicorn[standard]
+
+# Validation and schemas
+pydantic[email]
+
+# Database
+sqlalchemy
+psycopg[binary]
+
+# Authentication and security
+python-jose[cryptography]
+bcrypt
