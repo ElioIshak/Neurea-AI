@@ -74,5 +74,14 @@ class Case(Base):
     patient: Mapped['Patient'] = relationship(back_populates='cases')
     user: Mapped['User'] = relationship(back_populates='cases')
     mris: Mapped[list['MRI']] = relationship(back_populates='case')
-    papers: Mapped[list['CaseResearchPaper']] = relationship(back_populates='case')
-    chat: Mapped['Chat | None'] = relationship(back_populates='case', uselist=False)
+    papers: Mapped[list['CaseResearchPaper']] = relationship(
+        back_populates='case',
+        cascade='all, delete-orphan',
+        passive_deletes=True,
+    )
+    chat: Mapped['Chat | None'] = relationship(
+        back_populates='case',
+        uselist=False,
+        cascade='all, delete-orphan',
+        passive_deletes=True,
+    )

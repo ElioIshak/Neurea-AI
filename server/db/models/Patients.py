@@ -2,7 +2,7 @@ import uuid
 
 from datetime import date, datetime
 from enum import Enum
-from sqlalchemy import ForeignKey, Date, DateTime, Text, func, Enum as sqlenum, Uuid
+from sqlalchemy import ForeignKey, UniqueConstraint, Date, DateTime, Text, func, Enum as sqlenum, Uuid
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from typing import TYPE_CHECKING
 
@@ -22,6 +22,9 @@ class Sex(str, Enum):
 
 class Patient(Base):
     __tablename__ = "patients"
+    __table_args__ = (
+        UniqueConstraint("id", "owner_user_id", name="uq_patients_id_owner"),
+    )
 
     id: Mapped[uuid.UUID] = mapped_column(
         Uuid(as_uuid=True),
@@ -32,7 +35,7 @@ class Patient(Base):
     owner_user_id: Mapped[uuid.UUID] = mapped_column(
         Uuid(as_uuid=True),
         ForeignKey("users.id"),
-        primary_key=True,
+        nullable=False,
         index=True,
     )
 
