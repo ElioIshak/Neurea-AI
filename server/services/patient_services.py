@@ -1,7 +1,7 @@
 import uuid
 
 from fastapi import HTTPException
-from sqlalchemy import select
+from sqlalchemy import select, or_
 from sqlalchemy.orm import Session
 
 from db.models.Patients import Patient
@@ -84,3 +84,20 @@ async def get_patient(patient_id: uuid.UUID, current_user: UserResponse, db: Ses
         raise HTTPException(status_code=404, detail='Patient does not exist')
 
     return patient
+
+# search patients by name
+async def search_patients(query: str, current_user: UserResponse, db: Session) -> list[PatientOutput]:
+    search = f"%{query.strip()}%"
+
+    stmt = select(Patient).where(
+        Patient.owner_user_id == _user_id(current_user),
+        Patient.deleted_at == None,
+        or_(
+            Patient.first_name.ilike(search),
+            Patient.last_name.ilike(search)
+        )
+    )
+
+    data = db.scalars(stmt).all()
+
+    return data
