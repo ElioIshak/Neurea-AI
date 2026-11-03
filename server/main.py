@@ -29,7 +29,8 @@ def create_app() -> FastAPI:
         version='1.0',
     )
 
-    prefix = os.getenv('API_PREFIX')
+    prefix_value = os.getenv('API_PREFIX', '/Neurea/api/v1.0')
+    prefix = f"/{prefix_value.strip('/')}" if prefix_value.strip('/') else ''
 
     app.include_router(prefix=prefix, router=auth.router)
     app.include_router(prefix=prefix, router=patient.router)

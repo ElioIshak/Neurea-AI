@@ -10,7 +10,6 @@ from sqlalchemy.orm import Session, selectinload
 from db.models.CaseResearchPapers import CaseResearchPaper
 from db.models.Cases import Case
 from db.models.Papers import Paper
-from db.models.Users import User
 from schemas.auth import UserResponse
 from schemas.paper import PaperCreateInput, PaperOutput, CaseResearchPaperOutput
 
@@ -98,9 +97,10 @@ async def get_papers(current_user: UserResponse, db: Session) -> list[PaperOutpu
 
 # get research papers associated with a case
 async def get_case_papers(case_id: uuid.UUID, current_user: UserResponse, db: Session) -> list[CaseResearchPaperOutput]:
+    user_id = _user_id(current_user)
     case_stmt = select(Case.id).where(
         Case.id == case_id,
-        Case.user_id == _user_id(current_user),
+        Case.user_id == user_id,
         Case.deleted_at.is_(None),
     )
     if db.execute(case_stmt).scalar_one_or_none() is None:
@@ -108,7 +108,11 @@ async def get_case_papers(case_id: uuid.UUID, current_user: UserResponse, db: Se
 
     stmt = (
         select(CaseResearchPaper)
-        .where(CaseResearchPaper.case_id == case_id)
+        .join(CaseResearchPaper.paper)
+        .where(
+            CaseResearchPaper.case_id == case_id,
+            Paper.user_id == user_id,
+        )
         .options(selectinload(CaseResearchPaper.paper))
         .order_by(CaseResearchPaper.added_at.desc())
     )

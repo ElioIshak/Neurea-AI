@@ -69,7 +69,11 @@ class Case(Base):
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False
     )
-    deleted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    deleted_at: Mapped[datetime | None] = mapped_column(
+        "deleted_At",
+        DateTime(timezone=True),
+        nullable=True,
+    )
 
     patient: Mapped['Patient'] = relationship(back_populates='cases')
     user: Mapped['User'] = relationship(back_populates='cases')
