@@ -7,14 +7,14 @@ from sqlalchemy.orm import Session
 from db.db import get_db
 from dependencies.auth import get_current_user
 from schemas.auth import UserResponse
-from schemas.case import CaseCreateInput, CaseUpdateInput
+from schemas.case import CaseCreateInput, CaseUpdateInput, CaseOutput
 from services import case_services
 
 
 router = APIRouter(prefix='/cases', tags=['Cases'])
 
 
-@router.post('/{user_name}/create', status_code=status.HTTP_201_CREATED)
+@router.post('/{user_name}/create', status_code=status.HTTP_201_CREATED, response_model=CaseOutput)
 async def create_case(
     user_name: str,
     input: CaseCreateInput,
@@ -34,7 +34,7 @@ async def delete_case(
     await case_services.delete_case(case_id, current_user, db)
 
 
-@router.get('/{user_name}/get_cases', status_code=status.HTTP_200_OK)
+@router.get('/{user_name}/get_cases', status_code=status.HTTP_200_OK, response_model=list[CaseOutput])
 async def get_cases(
     user_name: str,
     current_user: UserResponse = Depends(get_current_user),
@@ -43,7 +43,7 @@ async def get_cases(
     return await case_services.get_cases(current_user, db)
 
 
-@router.get('/{user_name}/get_patient_cases/{patient_id}', status_code=status.HTTP_200_OK)
+@router.get('/{user_name}/get_patient_cases/{patient_id}', status_code=status.HTTP_200_OK, response_model=list[CaseOutput])
 async def get_patient_cases(
     user_name: str,
     patient_id: uuid.UUID,
@@ -53,7 +53,7 @@ async def get_patient_cases(
     return await case_services.get_patient_cases(patient_id, current_user, db)
 
 
-@router.put('/{user_name}/modify/{case_id}', status_code=status.HTTP_200_OK)
+@router.put('/{user_name}/modify/{case_id}', status_code=status.HTTP_200_OK, response_model=CaseOutput)
 async def modify_case(
     user_name: str,
     case_id: uuid.UUID,

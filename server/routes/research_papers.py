@@ -8,14 +8,14 @@ from sqlalchemy.orm import Session
 from db.db import get_db
 from dependencies.auth import get_current_user
 from schemas.auth import UserResponse
-from schemas.paper import PaperCreateInput
+from schemas.paper import PaperCreateInput, PaperOutput, CaseResearchPaperOutput
 from services import paper_services
 
 
 router = APIRouter(prefix='/research-papers', tags=['Research Papers'])
 
 
-@router.post('/{user_name}/create', status_code=status.HTTP_201_CREATED)
+@router.post('/{user_name}/create', status_code=status.HTTP_201_CREATED, response_model=PaperOutput)
 async def create_paper(
     user_name: str,
     input: PaperCreateInput,
@@ -35,7 +35,7 @@ async def delete_paper(
     await paper_services.delete_paper(paper_id, current_user, db)
 
 
-@router.get('/{user_name}/get_papers', status_code=status.HTTP_200_OK)
+@router.get('/{user_name}/get_papers', status_code=status.HTTP_200_OK, response_model=list[PaperOutput])
 async def get_papers(
     user_name: str,
     current_user: UserResponse = Depends(get_current_user),
@@ -44,7 +44,7 @@ async def get_papers(
     return await paper_services.get_papers(current_user, db)
 
 
-@router.get('/{user_name}/get_paper/{paper_id}', status_code=status.HTTP_200_OK)
+@router.get('/{user_name}/get_paper/{paper_id}', status_code=status.HTTP_200_OK, response_model=PaperOutput)
 async def get_paper(
     user_name: str,
     paper_id: uuid.UUID,
@@ -54,7 +54,7 @@ async def get_paper(
     return await paper_services.get_paper(paper_id, current_user, db)
 
 
-@router.get('/{user_name}/case/{case_id}', status_code=status.HTTP_200_OK)
+@router.get('/{user_name}/case/{case_id}', status_code=status.HTTP_200_OK, response_model=list[CaseResearchPaperOutput])
 async def get_case_papers(
     user_name: str,
     case_id: uuid.UUID,
