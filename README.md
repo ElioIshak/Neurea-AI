@@ -96,9 +96,17 @@ Additional technologies for document processing, scientific literature indexing,
 
 Neurea-AI is intended to support medical research and clinical investigation, not to replace a qualified healthcare professional. AI-generated summaries and interpretations may be incomplete or incorrect and require independent review. The system is not intended to provide autonomous diagnoses or determine treatment without appropriate professional oversight.
 
-## 📄 License
+## 📄 License & Copyright
 
-A license has not yet been specified. Add a license file when the project's distribution and usage terms have been established.
+**Neurea-AI is proprietary software. All rights reserved.**
+
+Copyright © 2026 Elio Ishak.
+
+No permission is granted to copy, modify, distribute, publish, sublicense, sell, or otherwise use this project or its original materials without prior express written permission from the copyright holder.
+
+Public access to this repository does not grant any rights to reuse its contents. Third-party components and dependencies remain subject to their respective licenses.
+
+See the [LICENSE](LICENSE) file for the full terms.
 
 ---
 
